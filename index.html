@@ -3,166 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>2025 新高考I卷 · 语文阅读训练</title>
+<title>小阅读</title>
 <style>
   :root {
-    --bg: #f5f3ee;
-    --paper: #fffdf8;
-    --ink: #1a1a1a;
-    --ink-2: #555;
-    --ink-3: #8a8a8a;
-    --line: #e3ddd0;
-    --accent: #a8321e;       /* 朱砂 */
-    --accent-soft: rgba(168,50,30,.08);
-    --ok: #2e7d4f;
-    --ok-soft: rgba(46,125,79,.1);
-    --err: #b3261e;
-    --err-soft: rgba(179,38,30,.08);
+    --bg: #f5f3ee; --paper: #fffdf8; --ink: #1a1a1a; --ink-2: #555; --ink-3: #8a8a8a;
+    --line: #e3ddd0; --accent: #a8321e; --accent-soft: rgba(168,50,30,.08);
+    --ok: #2e7d4f; --ok-soft: rgba(46,125,79,.1);
+    --err: #b3261e; --err-soft: rgba(179,38,30,.08); --warn: #b8860b;
     --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #161513;
-      --paper: #1f1e1b;
-      --ink: #ece7dd;
-      --ink-2: #b8b2a6;
-      --ink-3: #7d786e;
-      --line: #33312c;
-      --accent: #e06a54;
-      --accent-soft: rgba(224,106,84,.12);
-      --ok: #6fcf97;
-      --ok-soft: rgba(111,207,151,.14);
-      --err: #ff8a80;
-      --err-soft: rgba(255,138,128,.12);
+      --bg: #161513; --paper: #1f1e1b; --ink: #ece7dd; --ink-2: #b8b2a6; --ink-3: #7d786e;
+      --line: #33312c; --accent: #e06a54; --accent-soft: rgba(224,106,84,.12);
+      --ok: #6fcf97; --ok-soft: rgba(111,207,151,.14);
+      --err: #ff8a80; --err-soft: rgba(255,138,128,.12); --warn: #d4a017;
       --shadow: 0 1px 3px rgba(0,0,0,.4);
     }
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--bg); color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    padding-bottom: env(safe-area-inset-bottom);
+    font-size: 16px; line-height: 1.6; padding-bottom: env(safe-area-inset-bottom); min-height: 100vh;
   }
-  /* 顶栏 */
-  header {
-    position: sticky; top: 0; z-index: 10;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    padding: 12px 20px calc(12px + env(safe-area-inset-top));
-  }
-  .title-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  h1 { font-size: 17px; margin: 0; font-weight: 600; letter-spacing: .5px; }
-  .sub { font-size: 12px; color: var(--ink-3); }
-  .progress-wrap { margin-top: 8px; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  button { font-family: inherit; }
+  #loginScreen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+  .login-logo { font-size: 56px; margin-bottom: 8px; }
+  .login-title { font-size: 28px; font-weight: 700; margin: 0 0 4px; letter-spacing: 4px; }
+  .login-sub { color: var(--ink-3); font-size: 13px; margin-bottom: 36px; }
+  .login-card { background: var(--paper); border-radius: 16px; padding: 28px; box-shadow: var(--shadow); width: 100%; max-width: 360px; }
+  .login-card label { display: block; font-size: 12px; color: var(--ink-3); margin-bottom: 6px; }
+  .login-card input { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 16px; background: transparent; color: var(--ink); margin-bottom: 16px; outline: none; }
+  .login-card input:focus { border-color: var(--accent); }
+  .btn-primary { width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+  .btn-primary:hover { opacity: .9; }
+  .existing-users { margin-top: 20px; font-size: 13px; color: var(--ink-3); text-align: center; }
+  .existing-users button { display: inline-block; margin: 4px; padding: 6px 14px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); border-radius: 16px; font-size: 13px; cursor: pointer; }
+  #mainScreen { display: none; }
+  header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 20px calc(12px + env(safe-area-inset-top)); }
+  .title-row { display: flex; align-items: center; justify-content: space-between; }
+  h1 { font-size: 18px; margin: 0; font-weight: 700; letter-spacing: 2px; }
+  .user-chip { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); }
+  .user-chip button { background: transparent; border: 1px solid var(--line); color: var(--ink-2); padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+  .progress-wrap { margin-top: 10px; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
   .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width .3s; }
   .progress-text { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
-
-  /* 章节 tab */
-  nav.tabs {
-    display: flex; gap: 4px; overflow-x: auto;
-    padding: 8px 16px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    position: sticky; top: 0; z-index: 9;
-  }
-  nav.tabs button {
-    flex: 0 0 auto;
-    background: transparent; border: 1px solid var(--line);
-    color: var(--ink-2); padding: 6px 14px;
-    border-radius: 16px; font-size: 13px; cursor: pointer;
-    font-family: inherit;
-  }
-  nav.tabs button.active {
-    background: var(--accent); color: #fff; border-color: var(--accent);
-  }
-
-  /* 主体双栏 */
-  main {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 20px;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  @media (max-width: 860px) {
-    main { grid-template-columns: 1fr; padding: 12px; }
-  }
-
-  /* 文章卡片 */
-  article.paper {
-    background: var(--paper);
-    border-radius: 12px;
-    padding: 28px 32px;
-    box-shadow: var(--shadow);
-    align-self: start;
-    position: sticky; top: 130px;
-    max-height: calc(100vh - 150px);
-    overflow-y: auto;
-  }
-  @media (max-width: 860px) {
-    article.paper { position: static; max-height: none; padding: 20px; }
-  }
-  article.paper h2 {
-    font-family: "Songti SC", "STSong", "SimSun", serif;
-    font-size: 20px; text-align: center; margin: 0 0 4px;
-    font-weight: 700;
-  }
-  article.paper .author {
-    text-align: center; color: var(--ink-3); font-size: 13px; margin-bottom: 20px;
-  }
-  article.paper .body {
-    font-family: "Songti SC", "STSong", "SimSun", serif;
-    font-size: 16.5px; line-height: 1.95;
-    color: var(--ink);
-  }
-  article.paper .body p { margin: 0 0 14px; text-indent: 2em; }
+  nav.bottom-tabs { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; background: var(--paper); border-top: 1px solid var(--line); display: flex; padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); }
+  nav.bottom-tabs button { flex: 1; background: transparent; border: none; color: var(--ink-3); padding: 8px; font-size: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  nav.bottom-tabs button.active { color: var(--accent); }
+  nav.bottom-tabs button .icon { font-size: 20px; }
+  main { padding: 16px 16px 100px; max-width: 1280px; margin: 0 auto; }
+  nav.chap-tabs { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 16px; }
+  nav.chap-tabs button { flex: 0 0 auto; background: transparent; border: 1px solid var(--line); color: var(--ink-2); padding: 6px 14px; border-radius: 16px; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  nav.chap-tabs button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .quiz-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .quiz-layout { grid-template-columns: 1fr; } }
+  article.paper { background: var(--paper); border-radius: 12px; padding: 24px 28px; box-shadow: var(--shadow); align-self: start; }
+  @media (min-width: 861px) { article.paper { position: sticky; top: 130px; max-height: calc(100vh - 150px); overflow-y: auto; } }
+  article.paper h2 { font-family: "Songti SC", "STSong", serif; font-size: 19px; text-align: center; margin: 0 0 4px; font-weight: 700; }
+  article.paper .author { text-align: center; color: var(--ink-3); font-size: 12px; margin-bottom: 18px; }
+  article.paper .body { font-family: "Songti SC", "STSong", serif; font-size: 16px; line-height: 1.95; }
+  article.paper .body p { margin: 0 0 12px; text-indent: 2em; }
   article.paper .body .qa-q { font-weight: 600; }
-  article.paper .body .note {
-    font-size: 13px; color: var(--ink-3);
-    border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 16px;
-    text-indent: 0; line-height: 1.6;
-  }
-  article.paper .poem {
-    text-align: center; font-family: "Songti SC", serif;
-    line-height: 2.2; font-size: 17px;
-  }
-
-  /* 题目区 */
-  section.quiz { display: flex; flex-direction: column; gap: 16px; }
-  .q-card {
-    background: var(--paper);
-    border-radius: 12px;
-    padding: 20px 22px;
-    box-shadow: var(--shadow);
-  }
-  .q-head { display: flex; gap: 8px; align-items: baseline; margin-bottom: 10px; }
-  .q-num {
-    background: var(--accent-soft); color: var(--accent);
-    font-size: 12px; font-weight: 600;
-    padding: 2px 8px; border-radius: 4px;
-  }
-  .q-tag { font-size: 11px; color: var(--ink-3); }
-  .q-stem { font-size: 15.5px; line-height: 1.75; margin: 0 0 14px; }
+  article.paper .body .note { font-size: 12px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 14px; text-indent: 0; line-height: 1.6; }
+  article.paper .poem { text-align: center; line-height: 2.2; }
+  .q-list { display: flex; flex-direction: column; gap: 14px; }
+  .q-card { background: var(--paper); border-radius: 12px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .q-head { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .q-num { background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .q-cat { font-size: 11px; color: var(--ink-3); }
+  .q-stem { font-size: 15px; line-height: 1.75; margin: 0 0 12px; }
   .q-stem .sub-q { display: block; margin-top: 8px; color: var(--ink-2); }
-
-  /* 选项 */
   .options { display: flex; flex-direction: column; gap: 8px; }
-  .opt {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 14.5px; line-height: 1.6;
-    cursor: pointer;
-    transition: all .15s;
-    display: flex; gap: 10px; align-items: flex-start;
-    background: transparent; color: var(--ink);
-    font-family: inherit; text-align: left;
-  }
+  .opt { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 14px; line-height: 1.6; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; background: transparent; color: var(--ink); text-align: left; transition: all .15s; }
   .opt:hover { border-color: var(--accent); background: var(--accent-soft); }
   .opt .label { font-weight: 600; flex: 0 0 auto; }
   .opt.correct { border-color: var(--ok); background: var(--ok-soft); }
@@ -171,288 +86,209 @@
   .opt.disabled:hover { background: transparent; }
   .opt.disabled.correct:hover { background: var(--ok-soft); }
   .opt.disabled.wrong:hover { background: var(--err-soft); }
-
-  /* 主观题 */
-  .subjective-box {
-    border: 1px dashed var(--line);
-    border-radius: 8px; padding: 12px 14px;
-    font-size: 14px; color: var(--ink-2);
-  }
-  .reveal-btn {
-    background: var(--accent); color: #fff; border: none;
-    padding: 8px 18px; border-radius: 6px;
-    font-size: 13px; cursor: pointer; font-family: inherit;
-    margin-top: 10px;
-  }
-  .reveal-btn:hover { opacity: .9; }
-  .answer-block {
-    margin-top: 12px; padding: 12px 14px;
-    background: var(--ok-soft); border-left: 3px solid var(--ok);
-    border-radius: 0 6px 6px 0;
-    font-size: 14px; line-height: 1.75;
-    display: none;
-  }
+  .sp-box { margin-top: 10px; }
+  .sp-box .sp-title { font-size: 12px; color: var(--ink-3); margin-bottom: 8px; }
+  .sp-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 14px; }
+  .sp-item.checked { border-color: var(--ok); background: var(--ok-soft); }
+  .sp-item .checkbox { width: 18px; height: 18px; border: 2px solid var(--line); border-radius: 4px; flex: 0 0 auto; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+  .sp-item.checked .checkbox { background: var(--ok); border-color: var(--ok); }
+  .sp-score { font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 6px; }
+  .reveal-btn { background: var(--accent); color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; cursor: pointer; margin-top: 10px; }
+  .answer-block { margin-top: 12px; padding: 12px 14px; background: var(--ok-soft); border-left: 3px solid var(--ok); border-radius: 0 6px 6px 0; font-size: 14px; line-height: 1.75; display: none; }
   .answer-block.show { display: block; }
   .answer-block .lbl { font-size: 12px; color: var(--ok); font-weight: 600; margin-bottom: 6px; }
   .answer-block p { margin: 0 0 6px; }
-
-  /* 底部操作 */
-  footer.nav {
-    max-width: 1280px; margin: 20px auto 40px;
-    padding: 0 20px; display: flex; justify-content: space-between; align-items: center;
-  }
-  footer.nav button {
-    background: var(--paper); border: 1px solid var(--line);
-    color: var(--ink); padding: 10px 22px; border-radius: 8px;
-    font-size: 14px; cursor: pointer; font-family: inherit;
-  }
-  footer.nav button:hover { border-color: var(--accent); color: var(--accent); }
-  footer.nav button:disabled { opacity: .4; cursor: not-allowed; }
-
-  .reset-link {
-    font-size: 12px; color: var(--ink-3); cursor: pointer; text-decoration: underline;
-  }
+  .review-banner { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .review-banner .info { font-size: 14px; }
+  .review-banner .info b { color: var(--accent); }
+  .review-banner button { background: var(--accent); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+  .wrong-item { background: var(--paper); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; box-shadow: var(--shadow); }
+  .wrong-item .wi-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--ink-3); margin-bottom: 6px; }
+  .wrong-item .wi-stem { font-size: 14px; line-height: 1.6; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-3); }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .dash-card { background: var(--paper); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .dash-card h3 { margin: 0 0 16px; font-size: 15px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .bar-row .bar-label { width: 80px; font-size: 13px; color: var(--ink-2); flex: 0 0 auto; }
+  .bar-row .bar-track { flex: 1; height: 22px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .bar-row .bar-fill { height: 100%; background: var(--accent); border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: #fff; font-size: 11px; font-weight: 600; transition: width .5s; min-width: 30px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-cell { background: var(--bg); border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-cell .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-cell .lbl { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+  .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="title-row">
-    <h1>2025 新高考I卷 · 语文阅读</h1>
-    <span class="sub">共 16 题 · 含答案与解析 · 进度自动保存在本机</span>
+<div id="loginScreen">
+  <div class="login-logo">📖</div>
+  <h1 class="login-title">小阅读</h1>
+  <div class="login-sub">语文阅读训练 · 个人专属错题本</div>
+  <div class="login-card">
+    <label>输入名字开始（或创建新用户）</label>
+    <input type="text" id="usernameInput" placeholder="你的名字" maxlength="12">
+    <button class="btn-primary" onclick="login()">进入</button>
+    <div class="existing-users" id="existingUsers"></div>
   </div>
-  <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
-  <div class="progress-text" id="progressText">已答 0 / 16</div>
-</header>
+</div>
 
-<nav class="tabs" id="tabs"></nav>
-
-<main>
-  <article class="paper" id="article"></article>
-  <section class="quiz" id="quiz"></section>
-</main>
-
-<footer class="nav">
-  <button id="prevBtn">← 上一章</button>
-  <span class="reset-link" id="resetBtn">清空重做</span>
-  <button id="nextBtn">下一章 →</button>
-</footer>
+<div id="mainScreen">
+  <header>
+    <div class="title-row">
+      <h1>小阅读</h1>
+      <div class="user-chip">
+        <span id="currentUserLabel"></span>
+        <button onclick="logout()">切换</button>
+        <button onclick="deleteAccount()">删除账号</button>
+      </div>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="bar"></div></div>
+    <div class="progress-text" id="progressText"></div>
+  </header>
+  <main>
+    <div id="tab-quiz">
+      <nav class="chap-tabs" id="chapTabs"></nav>
+      <div class="quiz-layout">
+        <article class="paper" id="article"></article>
+        <div class="q-list" id="qList"></div>
+      </div>
+    </div>
+    <div id="tab-wrong" class="hidden"></div>
+    <div id="tab-dash" class="hidden"></div>
+  </main>
+  <nav class="bottom-tabs">
+    <button class="active" data-tab="quiz" onclick="switchTab('quiz')"><span class="icon">📝</span>刷题</button>
+    <button data-tab="wrong" onclick="switchTab('wrong')"><span class="icon">🔁</span>错题本</button>
+    <button data-tab="dash" onclick="switchTab('dash')"><span class="icon">📊</span>仪表盘</button>
+  </nav>
+</div>
 
 <script>
-/* ===================== 题库数据 ===================== */
 const PAPER = {
-  meta: { title: "2025 年普通高等学校招生全国统一考试 · 语文“, source: ”教育部教育考试院（阳光高考网公开版）" },
   sections: [
     {
-      id: "s1",
-      tab: "阅读I · 信息类",
+      id: "s1", tab: "信息类", category: "信息类",
       article: {
-        title: "种植入门问答",
-        author: "黄岳渊、黄德邻《花经》（节选）",
-        body: `
-          <p><span class="qa-q">问一：</span>譬如种植一株树，或者一株花，如何能使之必然生活，而且会发荣滋长？</p>
-          <p><span class="qa-q">答：</span>如果这一株花或树，得来时并无重大损伤，且出土未久，未曾枯槁，依法种植，断无不能生活之理。</p>
-          <p><span class="qa-q">问二：</span>如何说是依法种植？</p>
-          <p><span class="qa-q">答：</span>第一须择天晴之候，泥土干燥，深耕浅种。如有多枝，勿使分枝之处埋入土内，将泥土桩实，浇足凉水，这水要使地下之土与盖上之土，和花树之根结成一体，是谓依法种植。</p>
-          <p><span class="qa-q">问三：</span>依理想而论，种植花树以阴雨天为宜，为何舍此不取，反要选择天晴之日？</p>
-          <p><span class="qa-q">答：</span>烈日之下，种植固非所宜，然须择晴天的早上或晚上。因为在雨天，泥土一经雨淋，容易成块，种植之后，不能与花树之根及加入之土融合凝结，以致中多空隙，根须不但不能发达，且易腐蚀。所以必求天晴之日，将干泥粉碎，加入根之四周，使无一处空隙，然后灌之以水，则花树之根能与泥土融成一片，是以种树必趁晴天。</p>
-          <p><span class="qa-q">问四：</span>……</p>
-          <p><span class="qa-q">答：</span>……</p>
-          <p><span class="qa-q">问五：</span>深耕浅种之说，如何解释？</p>
-          <p><span class="qa-q">答：</span>所谓深耕，即是种树之穴必掘之稍深，较种下之树根越一倍；种时仍将掘出之松泥，填入穴内，中部稍稍高起，这就指浅种。继乃将树根安置妥帖，而旋转一周，使泥土与根相洽。然后四周再加泥土，让其与穴外原有之泥土相和洽，于是稍加坚实，再浇足水，是谓深耕浅种。</p>
-          <p><span class="qa-q">问六：</span>必须深耕之理由安在？</p>
-          <p><span class="qa-q">答：</span>花树发达与否，全靠乎根，假使根须不能发达，花树亦不能发达。倘使种植时仅掘至应种之下而止，则根须不易发展，花树即不能繁荣，此为必须深耕之理由。</p>
-          <p><span class="qa-q">问七：</span>既深耕矣，深种有何妨碍，何以必须浅种？</p>
-          <p><span class="qa-q">答：</span>花与树之呼吸，在枝干与叶，如人之有口鼻，人苟闭塞口鼻，必致窒息。使花与树之枝干，深陷土内，亦必致窒息，此即不可深种之理由。</p>
-          <p><span class="qa-q">问八：</span>种植花树方法，尚有其他不可不知的条件否？</p>
-          <p><span class="qa-q">答：</span>尚有三端不可不明白：第一，种植花树的地位；第二，种植后的浇灌干湿；第三，施肥料的时期和浓淡。三端缺一，不能使种后之花树延长生命，而且也不能发达。</p>
-          <p><span class="qa-q">问九：</span>如何是地位？</p>
-          <p><span class="qa-q">答：</span>地位有两种，一种是方向，一种是高低。</p>
-          <p><span class="qa-q">问十：</span>方向应当如何？古人说是向阳的好，是否如此？</p>
-          <p><span class="qa-q">答：</span>这是不差的，但是也有较为喜阴的，即使喜阳的花树，长久晒在烈日之下，亦非所宜。</p>
-          <p><span class="qa-q">问十一：</span>高低又怎样解释？</p>
-          <p><span class="qa-q">答：</span>花树有喜干的，也有喜湿的，但即使喜湿的花树，如时常浸在水内，除浮萍水草等外，绝不能耐。所以种植花树之地，必较平地为高，使大雨之后，无积水之患。</p>
-          <p><span class="qa-q">问十二：</span>请问浇灌的干湿如何？</p>
-          <p><span class="qa-q">答：</span>浇灌必依天时的干湿而定：风和日暖，雨水调畅之时，不必浇灌；天晴较久，夜无露水，日间浇灌；炎夏烈日，每日浇灌，或晨夕各一次浇灌。浇灌必须在日尚未出，或日已没落时，地面热气全消，方为有益无害。不然，郁热之气，蕴蓄于根，易致腐烂。假使干湿难定，则自以较干为宜，常言道“湿不如干”，乃经验之谈也。</p>
-          <p><span class="qa-q">问十三：</span>请问施用肥料之时期和浓淡，如何方称适当？</p>
-          <p><span class="qa-q">答：</span>时期各有先后，然就普通而言，以立冬之后与立春之前，最为适宜。施用肥料，须在天晴之后，若在雨天肥料随流水而去，不但效用全无，且雨时根须已湿，加以肥料沾着易致腐烂。至于肥料浓淡以及肥料多少，常语曰“肥不如瘠”。如此观之，施肥不若淡而次数多为妙，湿时施干肥，干时施液肥可也。</p>
-          <p><span class="qa-q">问十四：</span>"湿不如干""肥不如瘠"，依理想而论，似乎相反，请问理由安在？</p>
-          <p><span class="qa-q">答：</span>所谓湿干肥瘠，皆是过分而言。因为过干如经发觉，可以立刻浇灌而使之湿，过湿则不能立刻使之干也，肥瘠亦然。盖一则能补救，一则不能补救，此其理之一。过干过瘠之弊，花树枝叶至多暂时憔悴，一经发觉，实时浇水、上肥，尚可补救。过湿过肥，其病先在于根，根已腐烂，枝叶尚繁茂，及至根部腐烂殆尽，枝叶变化，补救已无及矣，此其理之二。</p>
-          <p><span class="qa-q">问十五：</span>除以上问答外，尚有不可不知之事理否？</p>
-          <p><span class="qa-q">答：</span>尚有一端为入门不可不知者，余常谓培植花树，与教育儿童无异。教育儿童的最要条件，为多注意，少干涉。假使少注意，而多干涉，不但于儿童身心无益处，反多弊害也。种植花树亦然，一花一树，既经依法种植之后，须时时留意，有无害虫滋蔓，或风吹、雨打、日炙、霜侵，有则及时补救。切不可时常移植，攀折摇动，使之不能安定，如此则自然枝叶茁发，花果丰饶。而所谓入门，亦尽于此矣。</p>
-          <p class="note">（摘编自黄岳渊、黄德邻《花经》）</p>
-        `
+        title: "种植入门问答", author: "黄岳渊、黄德邻《花经》（节选）",
+        body: '<p><span class="qa-q">问一：</span>譬如种植一株树，或者一株花，如何能使之必然生活，而且会发荣滋长？</p><p><span class="qa-q">答：</span>如果这一株花或树，得来时并无重大损伤，且出土未久，未曾枯槁，依法种植，断无不能生活之理。</p><p><span class="qa-q">问二：</span>如何说是依法种植？</p><p><span class="qa-q">答：</span>第一须择天晴之候，泥土干燥，深耕浅种。如有多枝，勿使分枝之处埋入土内，将泥土桩实，浇足凉水，这水要使地下之土与盖上之土，和花树之根结成一体，是谓依法种植。</p><p><span class="qa-q">问三：</span>依理想而论，种植花树以阴雨天为宜，为何舍此不取，反要选择天晴之日？</p><p><span class="qa-q">答：</span>烈日之下，种植固非所宜，然须择晴天的早上或晚上。因为在雨天，泥土一经雨淋，容易成块，种植之后，不能与花树之根及加入之土融合凝结，以致中多空隙，根须不但不能发达，且易腐蚀。所以必求天晴之日，将干泥粉碎，加入根之四周，使无一处空隙，然后灌之以水，则花树之根能与泥土融成一片，是以种树必趁晴天。</p><p><span class="qa-q">问四：</span>……</p><p><span class="qa-q">答：</span>……</p><p><span class="qa-q">问五：</span>深耕浅种之说，如何解释？</p><p><span class="qa-q">答：</span>所谓深耕，即是种树之穴必掘之稍深，较种下之树根越一倍；种时仍将掘出之松泥，填入穴内，中部稍稍高起，这就指浅种。继乃将树根安置妥帖，而旋转一周，使泥土与根相洽。然后四周再加泥土，让其与穴外原有之泥土相和洽，于是稍加坚实，再浇足水，是谓深耕浅种。</p><p><span class="qa-q">问六：</span>必须深耕之理由安在？</p><p><span class="qa-q">答：</span>花树发达与否，全靠乎根，假使根须不能发达，花树亦不能发达。倘使种植时仅掘至应种之下而止，则根须不易发展，花树即不能繁荣，此为必须深耕之理由。</p><p><span class="qa-q">问七：</span>既深耕矣，深种有何妨碍，何以必须浅种？</p><p><span class="qa-q">答：</span>花与树之呼吸，在枝干与叶，如人之有口鼻，人苟闭塞口鼻，必致窒息。使花与树之枝干，深陷土内，亦必致窒息，此即不可深种之理由。</p><p><span class="qa-q">问八：</span>种植花树方法，尚有其他不可不知的条件否？</p><p><span class="qa-q">答：</span>尚有三端不可不明白：第一，种植花树的地位；第二，种植后的浇灌干湿；第三，施肥料的时期和浓淡。三端缺一，不能使种后之花树延长生命，而且也不能发达。</p><p><span class="qa-q">问九：</span>如何是地位？</p><p><span class="qa-q">答：</span>地位有两种，一种是方向，一种是高低。</p><p><span class="qa-q">问十：</span>方向应当如何？古人说是向阳的好，是否如此？</p><p><span class="qa-q">答：</span>这是不差的，但是也有较为喜阴的，即使喜阳的花树，长久晒在烈日之下，亦非所宜。</p><p><span class="qa-q">问十一：</span>高低又怎样解释？</p><p><span class="qa-q">答：</span>花树有喜干的，也有喜湿的，但即使喜湿的花树，如时常浸在水内，除浮萍水草等外，绝不能耐。所以种植花树之地，必较平地为高，使大雨之后，无积水之患。</p><p><span class="qa-q">问十二：</span>请问浇灌的干湿如何？</p><p><span class="qa-q">答：</span>浇灌必依天时的干湿而定：风和日暖，雨水调畅之时，不必浇灌；天晴较久，夜无露水，日间浇灌；炎夏烈日，每日浇灌，或晨夕各一次浇灌。浇灌必须在日尚未出，或日已没落时，地面热气全消，方为有益无害。不然，郁热之气，蕴蓄于根，易致腐烂。假使干湿难定，则自以较干为宜，常言道「湿不如干」，乃经验之谈也。</p><p><span class="qa-q">问十三：</span>请问施用肥料之时期和浓淡，如何方称适当？</p><p><span class="qa-q">答：</span>时期各有先后，然就普通而言，以立冬之后与立春之前，最为适宜。施用肥料，须在天晴之后，若在雨天肥料随流水而去，不但效用全无，且雨时根须已湿，加以肥料沾着易致腐烂。至于肥料浓淡以及肥料多少，常语曰「肥不如瘠」。如此观之，施肥不若淡而次数多为妙，湿时施干肥，干时施液肥可也。</p><p><span class="qa-q">问十四：</span>「湿不如干」「肥不如瘠」，依理想而论，似乎相反，请问理由安在？</p><p><span class="qa-q">答：</span>所谓湿干肥瘠，皆是过分而言。因为过干如经发觉，可以立刻浇灌而使之湿，过湿则不能立刻使之干也，肥瘠亦然。盖一则能补救，一则不能补救，此其理之一。过干过瘠之弊，花树枝叶至多暂时憔悴，一经发觉，实时浇水、上肥，尚可补救。过湿过肥，其病先在于根，根已腐烂，枝叶尚繁茂，及至根部腐烂殆尽，枝叶变化，补救已无及矣，此其理之二。</p><p><span class="qa-q">问十五：</span>除以上问答外，尚有不可不知之事理否？</p><p><span class="qa-q">答：</span>尚有一端为入门不可不知者，余常谓培植花树，与教育儿童无异。教育儿童的最要条件，为多注意，少干涉。假使少注意，而多干涉，不但于儿童身心无益处，反多弊害也。种植花树亦然，一花一树，既经依法种植之后，须时时留意，有无害虫滋蔓，或风吹、雨打、日炙、霜侵，有则及时补救。切不可时常移植，攀折摇动，使之不能安定，如此则自然枝叶茁发，花果丰饶。而所谓入门，亦尽于此矣。</p><p class="note">（摘编自黄岳渊、黄德邻《花经》）</p>'
       },
       questions: [
-        {
-          id: "s1q1", type: "single",
+        { id: "s1q1", type: "single", category: "信息类",
           stem: "下列对原文相关内容的理解和分析，正确的一项是（ ）",
           options: [
             "阴天或下雨时种植花木，浇水量、施肥量过多，炎炎烈日每日浇灌，这些情况往往易导致植物的根部腐烂。",
-            "问三和问十四均用“依理想而论”对回答者的观点表示不解和疑问，回答者进行了解释，指出提问者原有认知的不合理之处。",
-            "问八的回答“尚有三端”以及问十五的回答“尚有一端”，这些内容可作为问六“必须深耕之理由安在”这一问题的补充。",
+            "问三和问十四均用「依理想而论」对回答者的观点表示不解和疑问，回答者进行了解释，指出提问者原有认知的不合理之处。",
+            "问八的回答「尚有三端」以及问十五的回答「尚有一端」，这些内容可作为问六「必须深耕之理由安在」这一问题的补充。",
             "问一到问三以及问五到问七讨论的是花木在种植过程中的存活问题，问八到问十五讨论的是花木移植到固定的地方后培育的注意事项。"
           ],
           answer: 1,
-          analysis: "A 项错误：雨天种植、烈日每日浇灌确实有问题，但文中说施肥过多导致根部腐烂的前提是“根须已湿，加以肥料沾着易致腐烂”，并非泛指阴天施肥。B 项正确：问三、问十四都用“依理想而论”引出疑问，回答者都做了辨析。C 项错误：问八、问十五讲的是地位、浇灌、施肥等三端与培育一端，与问六“必须深耕”无关。D 项错误：问五到问七讲深耕浅种，属于种植方法而非“存活问题”；问八到十五也并非专讲“移植后培育”。"
+          analysis: "A 项错误：施肥过多导致根部腐烂的前提是根须已湿，并非泛指阴天施肥。B 项正确：问三、问十四都用「依理想而论」引出疑问。C 项错误：问八、问十五讲地位、浇灌、施肥，与问六深耕无关。D 项错误：问五到问七讲深耕浅种，属于种植方法而非存活问题。"
         },
-        {
-          id: "s1q2", type: "single",
+        { id: "s1q2", type: "single", category: "信息类",
           stem: "下列对原文相关内容的分析和评价，不正确的一项是（ ）",
           options: [
-            "“如何能使之必然生活”“施用肥料之时期”中“生活”“时期”的含义与今天最常使用的意义不相同。",
-            "原文在部分回答结束时使用“是谓……”“是以……”“此为……”收尾，起到了回应提问、强调观点的作用。",
+            "「如何能使之必然生活」「施用肥料之时期」中「生活」「时期」的含义与今天最常使用的意义不相同。",
+            "原文在部分回答结束时使用「是谓……」「是以……」「此为……」收尾，起到了回应提问、强调观点的作用。",
             "问六的回答体现了在分析问题和解决问题时要善于抓住重点的思想，而问十二的回答则体现了具体问题具体分析的思想。",
-            "“作物之施肥，犹似人之饮食，饮不可过度，食不可过饱，否则作物之生长，似极茂盛，实则易为风雨吹倒”此句可全面且形象地回答问十三。"
+            "「作物之施肥，犹似人之饮食，饮不可过度，食不可过饱，否则作物之生长，似极茂盛，实则易为风雨吹倒」此句可全面且形象地回答问十三。"
           ],
           answer: 3,
-          analysis: "D 项错误：问十三问的是“施用肥料之时期和浓淡”，而题干引句讲的是施肥过度的危害，只涉及“浓淡”一个方面，并未回答“时期”问题，故不能“全面”回答。A、B、C 三项均可在原文找到依据。"
+          analysis: "D 项错误：问十三问的是施用肥料之时期和浓淡，题干引句只讲施肥过度的危害，只涉及浓淡一个方面，并未回答时期问题。"
         },
-        {
-          id: "s1q3", type: "subjective",
+        { id: "s1q3", type: "subjective", category: "信息类",
           stem: "根据原文内容，在下面文段的横线处补写出恰当的语句，每处不超过 10 个字。<span class='sub-q'>牡丹具有喜干怕湿、忌积水的习性，因此其种植地最好选择在干燥向阳、__①__的地方。栽种前先挖土坑，坑的具体大小以根系放入后能充分舒展为原则。再将基肥填入坑底，覆上一层约 10 厘米的厚土。然后将植株植入坑内，用手扶端正，填土一半，轻提植株并左右摇动，使__②__。栽植深度不可过深或过浅，过深则__③__，过浅又容易发生倒伏。最后将土填满，用脚踩实后再浇透水。</span>",
-          answer: `
-            <p>①地势比平地稍高</p>
-            <p>②泥土与根相和洽</p>
-            <p>③不利于植株的呼吸</p>
-          `,
-          analysis: "三处答案均需回扣原文：①对应问十一“种植花树之地，必较平地为高，使大雨之后，无积水之患”；②对应问五“使泥土与根相洽”“旋转一周，使泥土与根相洽”；③对应问七“花与树之呼吸，在枝干与叶……使花与树之枝干深陷土内，亦必致窒息”。"
+          scoringPoints: [
+            "①地势比平地稍高（答出排水/不积水即可）",
+            "②泥土与根相和洽（答出根土融合即可）",
+            "③不利于植株呼吸（答出根部窒息/腐烂即可）"
+          ],
+          answer: "<p>①地势比平地稍高</p><p>②泥土与根相和洽</p><p>③不利于植株的呼吸</p>",
+          analysis: "三处答案均需回扣原文：①对应问十一必较平地为高；②对应问五使泥土与根相洽；③对应问七深陷土内亦必致窒息。"
         },
-        {
-          id: "s1q4", type: "subjective",
+        { id: "s1q4", type: "subjective", category: "信息类",
           stem: "根据上下文，问四提出的问题可能是什么？请写出一个并阐述理由。",
-          answer: `
-            <p><b>示例一：</b></p>
-            <p>问题：种植之前如何预判天气是晴天还是雨天？</p>
-            <p>理由：问三和问五围绕问二回答的第一句话提问，因此问四应针对问三的回答设置问题。问三回答的主要内容是雨天种植的弊端以及晴天种植的方法，而在种植之前预判天气是至关重要的。</p>
-            <p><b>示例二：</b></p>
-            <p>问题：为使花树之根与泥土融合凝结，浇水量具体多少才算合适？</p>
-            <p>理由：紧承问三的回答设置问题，问三的回答中对浇水量多少才算合适合释得并不清晰，没有给出具体标准。</p>
-          `,
-          analysis: "本题考查根据问答体文体推断被删略的问题。需抓住“承上启下”的位置：问三讲完为什么要趁晴天、问五开始讲深耕浅种，问四必然在“晴天种植如何操作”这个衔接点上追问。写出合理问题并能从原文找到呼应即可。"
+          scoringPoints: [
+            "①写出一个与问三回答相关的合理问题",
+            "②能从原文找到呼应并阐述理由"
+          ],
+          answer: "<p><b>示例：</b>问题：为使花树之根与泥土融合凝结，浇水量具体多少才算合适？</p><p>理由：紧承问三的回答设置问题，问三回答中对浇水量多少才算合适合释得并不清晰。</p>",
+          analysis: "问四在晴天种植如何操作的衔接点上追问。写出合理问题并能从原文找到呼应即可。"
         },
-        {
-          id: "s1q5", type: "subjective",
+        { id: "s1q5", type: "subjective", category: "信息类",
           stem: "与本文类似，柳宗元《种树郭橐驼传》也把种树比作对待孩子，二者的养护理念有什么不同？产生这种不同的原因是什么？",
-          answer: `
-            <p><b>第一问：</b>①柳文认为应遵循自然生长规律，让树木依照本性生长，不再管它；②本文强调依法种植之后，还应依常规进行养护。</p>
-            <p><b>第二问：</b>①柳文的写作目的是借种树之道说明政令频出的危害，希望为官者不要打扰百姓的生产生活；②本文是希望读者培植的植物可以枝叶茁发、花果丰饶。</p>
-          `,
-          analysis: "两文都用种树喻育人/治民，但柳宗元是道家式“顺木之天”，本文是农家式“依法+常护”。差异根源在写作目的：《郭橐驼传》是寓言，借树讽政；《花经》是园艺入门指南，目标是真把花种活养好。"
+          scoringPoints: [
+            "①柳文：顺木之天，顺其自然，不再管护",
+            "②本文：依法种植后仍需常规养护",
+            "③柳文目的：借种树讽政令烦苛，希望不扰民",
+            "④本文目的：希望花树成活、花果丰饶"
+          ],
+          answer: "<p><b>第一问：</b>①柳文认为应遵循自然生长规律，让树木依照本性生长，不再管它；②本文强调依法种植之后，还应依常规进行养护。</p><p><b>第二问：</b>①柳文的写作目的是借种树之道说明政令频出的危害；②本文是希望读者培植的植物可以枝叶茁发、花果丰饶。</p>",
+          analysis: "柳宗元是道家式顺木之天，本文是农家式依法加常护。差异根源在写作目的不同。"
         }
       ]
     },
-
     {
-      id: "s2",
-      tab: "阅读II · 文学类",
+      id: "s2", tab: "文学类", category: "文学类",
       article: {
-        title: "鼓书艺人（节选） / 我为什么离开武汉（节选）",
-        author: "老舍",
-        body: `
-          <p style="text-align:center;font-weight:600;text-indent:0;margin-bottom:10px;">文本一：鼓书艺人（节选）</p>
-          <p>一九三八年夏，汉口战局吃紧。</p>
-          <p>浑浊的长江，浩浩荡荡地往东奔流。形形色色的难民，历尽了人间苦难，正没命地朝着相反的方向奔逃。翅膀下贴着红膏药的飞机，一个劲儿地扔炸弹。炸弹发出揪心的咝咝声往下落，一掉进水里，就溅起混着血的冲天水柱。</p>
-          <p>一只叫作“民生”的白色小江轮，满载着难民，正沿江而上，开往重庆。船上的烟囱突突地冒着黑烟，慢慢开进了“七十二滩”的第一滩，两岸的悬崖峭壁，把江水紧紧挤在中间。</p>
-          <p>房舱和统舱里都挤满了人，甲板上也是水泄不通。在浓烟直冒的烟囱底下，有五六十个小孩子，手足无措地紧紧挤在一起。他们已经没了家，没了父母，浑身都是煤烟和尘土，就像刚打煤堆里钻出来一样。</p>
-          <p>湍急的长江，两岸怪石林立，江水像条怒龙，发狂地在两山之间扭来扭去。过了一道险滩，紧接着又是一道，然后直泻而下。船在江面上颠来簸去，像一条毛毛虫在挣命。汽笛一响，船上每个人都吓得大气也不敢出，唯恐大难临头。有的时候，迎着激流而上的满载的船，猛地摇晃起来，江水从船帮一涌而入，把甲板上的每个人都浇个透湿。</p>
-          <p>太阳一落到峭崖的背后，寒风就吹得乘客们直打战。偶尔一线阳光从岩石缝里漏过来，在汹涌的江面上投下一道彩虹，美得出奇。</p>
-          <p><b>大江两岸，座座青山，处处陡坡，都有自己的名字。它们千姿万态，构成一幅无穷无尽的画卷。古往今来，多少人讴歌江上变幻莫测的美景，多少人吟咏过有关它的神奇传说。楚怀王和巫山神女幽会的古迹犹存。可是这些逃难的旅客已顾不得这些，当江轮穿过巫峡，打绝代佳人——神女峰面前驶过时，他们都毫不动心。</b></p>
-          <p>难民们没闲心，也没立足的地方，没法凭栏观景致。所有乘客，不分老少贵贱，都被眼前的危险和茫茫前途吓住了。特别使人难受的，是生活上的不便。房舱里的人出不来，因为甲板上满是人，行李堆成了山。甲板上的人也活动不了，因为没空儿。所有的人都紧紧地挤在一块儿。可是，疲劳不堪的茶房还是想法给乘客们开饭。他们光着脚走路。那些沾满了煤烟和尘土的脚丫子，把它们挨过的所有东西都蹭脏了，在行李卷和包袱上留下小泥饼子。他们的脚沾不着甲板，只好见什么踩什么，——哪怕是踩在乘客的脸上或身上呢。被踩的人又叫又骂，结果是更乱，更惨。</p>
-          <p>在“民生”轮上，谁心里也不平静，人们不是烦恼，就是生气，悲伤。两岸美丽的青山映入眼帘也振奋不了他们。生活太无情，真是遭不完的罪孽，说不尽的伤心。</p>
-          <p>乘客中看来只有一个人是既不悲伤，也不发愁。这人就是方宝庆，四十开外，他靠一面大鼓、一副鼓板和一把三弦，在茶馆里唱大鼓、说评书吃饭。他是个走江湖卖艺的，大半生带着全家走南闯北。日本人进了北平，宝庆带着全家去上海。上海沦陷了，他们又到汉口。如今敌人进逼到汉口市郊了，他和全家又跟大伙儿一起往重庆逃。北平是宝庆的家。他唱的大鼓，全是京韵的。他要想留在北平很容易，用不着遭这么大罪，受这么多苦。他不明白自己是不是爱国，可是他宁愿丢下舒舒服服的家和心爱的东西，不愿在飘着日本旗的城里挣钱吃饭。</p>
-          <p>上了“民生”不到几个钟头，他就认得了几乎同船的人。没过多久，船的每个角落他都熟悉，什么东西在哪里，他都知道。要是他实在找不到别的事情可干，就顺着狭窄的铁梯，爬上甲板，看看烟囱下面那些没人管的，满身是煤烟的小孩儿。</p>
-          <p>宝庆看到这些一身煤烟的可怜孩子，觉着心疼。看着他们，想起他说过的那些动人心弦的故事，他体会得出这些可怜的小家伙在大乱中失去爹娘时的那份伤心劲儿。他也想象得出他们怎样没衣没食，挨饿受冻，从上海、南京一路过来，现在又往四川奔。</p>
-          <p>他希望能拿出三百四个热腾肉包子来，给这些面带病容的黑乎乎的小宝贝儿吃。可是有什么法子，他什么也拿不出。他想给孩子们唱上一段，可是心里直翻腾，开不了口。他跑江湖卖唱，多年学来的要来就来的笑容和容易交朋友的习惯，在这些遭难的孩子面前，一点儿也使不上。他一言不发，傻里傻气地站着发愣。突突冒烟的烟囱里落下来的黑煤灰，在他那没戴帽子的秃头上，慢慢地积了厚厚的一层。</p>
-          <p>听见下面甲板上传来欢呼声，他像从梦中醒来，往下看，乘客们都在高兴，因为船已经驶过了最后一道险滩。两岸只有平缓的山坡，江面变得又开阔，又平静。</p>
-          <p>船拢岸时，西边天上的太阳已经现出金红色。一时间谁也没动。那些驾着船安然穿过险滩的船长和领港，那些瞧着他们的茶房和乘客，一个个都累得不想动了。</p>
-          <p>宝庆掸了掸光头上的煤灰，张大了嘴，大声对孩子们叫道：“来，快来，都来，洗个澡。”他推开人群，领着孩子们走过跳板，像赶一群鸭子，扑通扑通地跳进水里。</p>
-          <p class="note">（马小弥译，有删改）</p>
-
-          <p style="text-align:center;font-weight:600;text-indent:0;margin:24px 0 10px;">文本二：我为什么离开武汉（节选）</p>
-          <p>在大时代中，专凭着看与听，是不能够了解它的，旁观者清，只是看清了事实的动态，而不能明白事态中人物的情感。看别人荷枪赴前线，并不能体念到战士的心情。要明白大时代，必须在大时代中分扭一部分工作。有了操作的经验与热情，而后才能认识时代一部分的真情真意。一部分自然与全面有异，可是认识了一个山峰，到底比瞪着眼看着千重雾岭强。因此，我既然由亡城逃出来，到了武汉，我就想作一点我所能作的，而且是有益于抗战的事。干什么去呢？最理想的当然是到军队里服务。但是，我去不了。我的身体弱。</p>
-          <p>伤心与自怨是没用的。我决定停在武汉，写稿子，不再作赴前方的梦。一边写文章，一边办理中华全国文艺界抗敌协会的事务，一直到了今年七月月底。这时候，武汉已遭过两次大轰炸。轰炸，随便吧，炸不死就写稿子。炸弹有两次都落在离我不很远的地方。有些人已向我讨论迁移的问题了，我不大起劲，我以离开武汉为耻。多住一天，仿佛就多一份勇气与力量。</p>
-          <p>……</p>
-          <p>我真不愿走！迁移之议既成，武汉不允许我住下去了。船票不易得，抓到一张，便须起身。流亡者的生活一半是在舟车之上。</p>
-          <p class="note">（发表于 1938 年 10 月，有删改）<br>【注】老舍于 1948 年至 1949 年创作了长篇小说《鼓书艺人》，被译为英文，1952 年出版。中文原稿遭遗失，后据英译本回译为中文。</p>
-        `
+        title: "鼓书艺人（节选）", author: "老舍",
+        body: '<p style="text-align:center;font-weight:600;text-indent:0;margin-bottom:10px;">文本一：鼓书艺人（节选）</p><p>一九三八年夏，汉口战局吃紧。</p><p>浑浊的长江，浩浩荡荡地往东奔流。形形色色的难民，历尽了人间苦难，正没命地朝着相反的方向奔逃。翅膀下贴着红膏药的飞机，一个劲儿地扔炸弹。炸弹发出揪心的咝咝声往下落，一掉进水里，就溅起混着血的冲天水柱。</p><p>一只叫作「民生」的白色小江轮，满载着难民，正沿江而上，开往重庆。船上的烟囱突突地冒着黑烟，慢慢开进了「七十二滩」的第一滩，两岸的悬崖峭壁，把江水紧紧挤在中间。</p><p>房舱和统舱里都挤满了人，甲板上也是水泄不通。在浓烟直冒的烟囱底下，有五六十个小孩子，手足无措地紧紧挤在一起。他们已经没了家，没了父母，浑身都是煤烟和尘土，就像刚打煤堆里钻出来一样。</p><p>湍急的长江，两岸怪石林立，江水像条怒龙，发狂地在两山之间扭来扭去。过了一道险滩，紧接着又是一道，然后直泻而下。船在江面上颠来簸去，像一条毛毛虫在挣命。</p><p>太阳一落到峭崖的背后，寒风就吹得乘客们直打战。偶尔一线阳光从岩石缝里漏过来，在汹涌的江面上投下一道彩虹，美得出奇。</p><p><b>大江两岸，座座青山，处处陡坡，都有自己的名字。它们千姿万态，构成一幅无穷无尽的画卷。古往今来，多少人讴歌江上变幻莫测的美景，多少人吟咏过有关它的神奇传说。楚怀王和巫山神女幽会的古迹犹存。可是这些逃难的旅客已顾不得这些，当江轮穿过巫峡，打绝代佳人——神女峰面前驶过时，他们都毫不动心。</b></p><p>难民们没闲心，也没立足的地方，没法凭栏观景致。所有乘客，不分老少贵贱，都被眼前的危险和茫茫前途吓住了。特别使人难受的，是生活上的不便。</p><p>在「民生」轮上，谁心里也不平静，人们不是烦恼，就是生气，悲伤。两岸美丽的青山映入眼帘也振奋不了他们。生活太无情，真是遭不完的罪孽，说不尽的伤心。</p><p>乘客中看来只有一个人是既不悲伤，也不发愁。这人就是方宝庆，四十开外，他靠一面大鼓、一副鼓板和一把三弦，在茶馆里唱大鼓、说评书吃饭。他是个走江湖卖艺的，大半生带着全家走南闯北。日本人进了北平，宝庆带着全家去上海。上海沦陷了，他们又到汉口。如今敌人进逼到汉口市郊了，他和全家又跟大伙儿一起往重庆逃。北平是宝庆的家。他唱的大鼓，全是京韵的。他要想留在北平很容易，用不着遭这么大罪，受这么多苦。他不明白自己是不是爱国，可是他宁愿丢下舒舒服服的家和心爱的东西，不愿在飘着日本旗的城里挣钱吃饭。</p><p>上了「民生」不到几个钟头，他就认得了几乎同船的人。没过多久，船的每个角落他都熟悉，什么东西在哪里，他都知道。要是他实在找不到别的事情可干，就顺着狭窄的铁梯，爬上甲板，看看烟囱下面那些没人管的，满身是煤烟的小孩儿。</p><p>宝庆看到这些一身煤烟的可怜孩子，觉着心疼。看着他们，想起他说过的那些动人心弦的故事，他体会得出这些可怜的小家伙在大乱中失去爹娘时的那份伤心劲儿。</p><p>他希望能拿出三百四个热腾肉包子来，给这些面带病容的黑乎乎的小宝贝儿吃。可是有什么法子，他什么也拿不出。他想给孩子们唱上一段，可是心里直翻腾，开不了口。他跑江湖卖唱，多年学来的要来就来的笑容和容易交朋友的习惯，在这些遭难的孩子面前，一点儿也使不上。他一言不发，傻里傻气地站着发愣。突突冒烟的烟囱里落下来的黑煤灰，在他那没戴帽子的秃头上，慢慢地积了厚厚的一层。</p><p>听见下面甲板上传来欢呼声，他像从梦中醒来，往下看，乘客们都在高兴，因为船已经驶过了最后一道险滩。两岸只有平缓的山坡，江面变得又开阔，又平静。</p><p>船拢岸时，西边天上的太阳已经现出金红色。一时间谁也没动。那些驾着船安然穿过险滩的船长和领港，那些瞧着他们的茶房和乘客，一个个都累得不想动了。</p><p>宝庆掸了掸光头上的煤灰，张大了嘴，大声对孩子们叫道：「来，快来，都来，洗个澡。」他推开人群，领着孩子们走过跳板，像赶一群鸭子，扑通扑通地跳进水里。</p><p class="note">（马小弥译，有删改）</p>'
       },
       questions: [
-        {
-          id: "s2q6", type: "single",
+        { id: "s2q6", type: "single", category: "文学类",
           stem: "下列对文本相关内容和艺术特色的分析鉴赏，正确的一项是（ ）",
           options: [
-            "文本一开头写长江向东奔流与难民向西奔逃，炸弹下落与水柱溅起，富有镜头感，将“战局吃紧”真切地呈现出来。",
-            "文本一写“江水像条怒龙，发狂地在两山之间扭来扭去”，这里的江水象征抗战的艰辛曲折以及人们不屈不挠的意志。",
+            "文本一开头写长江向东奔流与难民向西奔逃，炸弹下落与水柱溅起，富有镜头感，将战局吃紧真切地呈现出来。",
+            "文本一写江水像条怒龙，发狂地在两山之间扭来扭去，这里的江水象征抗战的艰辛曲折以及人们不屈不挠的意志。",
             "文本一写乘客们在寒风中打战，转而又写阳光在江面上投下彩虹，这里的阳光和彩虹都象征着难民们的希望。",
             "文本二是老舍在抗战中的自述，从不愿离开武汉到最终离开武汉，他在思想和认识上发生了重大转变。"
           ],
           answer: 0,
-          analysis: "A 项正确：开头几组对照镜头（东流长江/西逃难民、炸弹/水柱）蒙太奇式地呈现战局紧张。B 项过度解读：写江水怒龙主要是写实船险，并未上升到“不屈不挠的意志”象征。C 项过度解读：彩虹在文中只是客观美景，紧接的下文说难民“毫不动心”，并未象征希望。D 项错误：老舍在文本二中的态度始终是不愿走、以离开武汉为耻，思想认识并未发生“重大转变”，是形势所迫才离开。"
+          analysis: "A 项正确。B 项过度解读：写江水怒龙主要是写实船险。C 项过度解读：彩虹只是客观美景，紧接下文说难民毫不动心。D 项错误：老舍态度始终是不愿走、以离开武汉为耻，是形势所迫。"
         },
-        {
-          id: "s2q7", type: "single",
+        { id: "s2q7", type: "single", category: "文学类",
           stem: "关于文本一中方宝庆这个人物，下列说法不正确的一项是（ ）",
           options: [
-            "方宝庆不到几个钟头“就认得了几乎所有同船的人”，这与他“在茶馆里唱大鼓、说评书”的身份是相符的。",
-            "方宝庆使不上“多年学来的要来就来的笑容”，表明他虽有半生闯荡江湖的经验，却也无力应对眼前的局面。",
-            "方宝庆看着小孩发愣，头上“慢慢地积了厚厚的一层”黑煤灰，侧面表现出他的心灵因残酷的现实已趋于麻木。",
-            "写船拢岸时，方宝庆赶着孩子们“扑通扑通地跳进水里”洗澡，一定程度上舒缓了前文营造的沉重压抑的氛围。"
+            "方宝庆不到几个钟头就认得了几乎所有同船的人，这与他在茶馆里唱大鼓、说评书的身份是相符的。",
+            "方宝庆使不上多年学来的要来就来的笑容，表明他虽有半生闯荡江湖的经验，却也无力应对眼前的局面。",
+            "方宝庆看着小孩发愣，头上慢慢地积了厚厚的一层黑煤灰，侧面表现出他的心灵因残酷的现实已趋于麻木。",
+            "写船拢岸时，方宝庆赶着孩子们扑通扑通地跳进水里洗澡，一定程度上舒缓了前文营造的沉重压抑的氛围。"
           ],
           answer: 2,
-          analysis: "C 项错误：方宝庆看着孩子发愣、积灰满头，是因为他心疼孩子、心里翻腾却什么也做不了，是沉痛与共情，并非“心灵麻木”。A、B、D 三项分析均符合文本。"
+          analysis: "C 项错误：方宝庆看着孩子发愣、积灰满头，是因为他心疼孩子、心里翻腾却什么也做不了，是沉痛与共情，并非心灵麻木。"
         },
-        {
-          id: "s2q8", type: "subjective",
+        { id: "s2q8", type: "subjective", category: "文学类",
           stem: "文本一画线段落写江轮穿过巫峡，意蕴丰富，请简要分析。",
-          answer: `
-            <p>①写乘客只求生存，而无心顾及眼前胜景，反映了难民们逃亡中心力交瘁；</p>
-            <p>②江上美景和神奇传说，与山河破碎的现实构成对比，令人忧愤于国家蒙辱、人民蒙难、文明蒙尘。</p>
-          `,
-          analysis: "画线句的关键词是“毫不动心”。山水越美、传说越动人，对照之下人的麻木就越刺眼——不是美不美，是山河破碎下美已经无力慰藉苦难。这是典型的“以乐景写哀”。"
+          scoringPoints: [
+            "①乘客无心赏景，反映逃亡中心力交瘁",
+            "②美景与山河破碎对比，以乐景写哀，忧愤深沉"
+          ],
+          answer: "<p>①写乘客只求生存，而无心顾及眼前胜景，反映了难民们逃亡中心力交瘁；</p><p>②江上美景和神奇传说，与山河破碎的现实构成对比，令人忧愤于国家蒙辱、人民蒙难、文明蒙尘。</p>",
+          analysis: "画线句的关键词是毫不动心。山水越美、传说越动人，对照之下人的麻木就越刺眼——以乐景写哀。"
         },
-        {
-          id: "s2q9", type: "subjective",
-          stem: "文本二提出：“有了操作的经验与热情，而后才能认识时代一部分的真情真意。”请谈谈文本一的创作是如何体现作者这一认知的。",
-          answer: `
-            <p>①《鼓书艺人》的创作源自作者抗战时期的亲身经历；</p>
-            <p>②文本一的场景再现了作者在战争中感受到的人民流离失所的社会现实；</p>
-            <p>③文本一的人物刻画投注了作者的热情，他不是旁观者，而与普通民众休戚与共；</p>
-            <p>④文本一主要人物方宝庆的个人遭际与民族命运交织在一起，隐含了作者对民族前途的思考。</p>
-          `,
-          analysis: "本题要把文本二的创作观（亲身经历→投入热情→认识时代）逐条对应到文本一：老舍自己就在武汉、就在流亡路线上；他写难民不是旁观而是共情；方宝庆一个走江湖艺人的选择（不愿在日本人底下挣钱吃饭）就是整个民族气节的缩影。"
+        { id: "s2q9", type: "subjective", category: "文学类",
+          stem: "文本二提出：有了操作的经验与热情，而后才能认识时代一部分的真情真意。请谈谈文本一的创作是如何体现作者这一认知的。",
+          scoringPoints: [
+            "①创作源自抗战亲历",
+            "②场景再现流离失所的社会现实",
+            "③人物刻画投注热情，与民众共情",
+            "④方宝庆个人遭际与民族命运交织"
+          ],
+          answer: "<p>①《鼓书艺人》的创作源自作者抗战时期的亲身经历；</p><p>②文本一的场景再现了作者在战争中感受到的人民流离失所的社会现实；</p><p>③文本一的人物刻画投注了作者的热情，他不是旁观者，而与普通民众休戚与共；</p><p>④文本一主要人物方宝庆的个人遭际与民族命运交织在一起，隐含了作者对民族前途的思考。</p>",
+          analysis: "把文本二的创作观（亲身经历→投入热情→认识时代）逐条对应到文本一。"
         }
       ]
     },
-
     {
-      id: "s3",
-      tab: "阅读III · 文言文",
+      id: "s3", tab: "文言文", category: "文言文",
       article: {
-        title: "先识忧国四则",
-        author: "《左传》《列女传》《韩诗外传》《考信录》",
-        body: `
-          <p style="font-weight:600;text-indent:0;">材料一</p>
-          <p>郑伯如晋，子大叔相，见范献子。献子曰：“若王室何？”对曰："老夫其国家不能恤，敢及王室？抑人亦有言曰：'嫠不恤其纬，而忧宗周之陨，为将及焉。'今王室实蠢蠢焉，吾小国惧矣，然大国之忧也，吾侪何知焉？吾子其早图之。"</p>
-          <p class="note">（节选自《左传·昭公二十四年》）</p>
-
-          <p style="font-weight:600;text-indent:0;">材料二</p>
-          <p>漆室女者，鲁漆室邑之女也。当穆公时，君老，太子幼。女倚柱而啸，旁人闻之，莫不为之惨者。其邻人妇从之游，谓曰：“何啸之悲也？”漆室女曰：“吾忧鲁君老，太子幼。”邻妇笑曰：“此乃鲁大夫之忧，妇人何与焉！”漆室女曰："不然，非子所知也。昔晋客舍吾家，系马园中。马佚驰走，践吾葵，使我终岁不食葵。邻人女奔，随人亡，其家倩吾兄追之。逢霖水出，溺流而死，令吾终身无兄。<b>今鲁君老悖，太子少愚，愚伪日起。夫鲁国有患者君臣父子皆被其辱祸及众庶妇人独安所避乎！</b>吾甚忧之。"</p>
-          <p class="note">（节选自刘向《列女传》卷三）</p>
-
-          <p style="font-weight:600;text-indent:0;">材料三</p>
-          <p>鲁监门之女婴相从绩，中夜而泣涕。其偶曰：“何谓而泣也？”婴曰：“吾闻卫世子不肖，所以泣也。”其偶曰：“卫世子不肖，诸侯之忧也，子曷为泣也？”婴曰："吾闻之异乎子之言也。昔者宋之桓司马得罪于宋君，出于鲁，其马佚而辚吾园，而食吾园之葵。是岁，吾闻园人亡利之半。越王勾践起兵而攻吴，诸侯畏其威，鲁往献女，吾姊与焉，兄往视之，道畏而死。越兵威者，吴也；兄死者，我也。今卫世子甚不肖，好兵，吾男弟三人，能无忧乎？"</p>
-          <p class="note">（节选自韩婴《韩诗外传》卷二）</p>
-
-          <p style="font-weight:600;text-indent:0;">材料四</p>
-          <p>战国之时，说客辩士尤好借物以喻其意，非以为实有此事也，乃汉晋著述者往往误以为实事而采之入书。《春秋传》子大叔云“嫠不恤其纬，而忧宗周之陨，为将及焉”，此不过设言耳。其后衍之，遂谓漆室之女不绩其麻而忧鲁国；其后又衍之，遂谓鲁监门之女婴忧卫世子之不肖。而有"终岁不食葵""终身无兄"之言，若真有其人其事者矣。由是韩婴竟采之以入《诗外传》，刘向采之以入《列女传》。传之益久，信者愈多，遂至虚言竟成实事。万世之士但见汉人之书有之，遂信之而不疑，抑亦过矣。</p>
-          <p class="note">（节选自崔述《考信录》）<br>【注】春秋末期，周王室动荡，晋强郑弱。子大叔为郑国正卿，范献子为晋国大臣。</p>
-        `
+        title: "先识忧国四则", author: "《左传》《列女传》《韩诗外传》《考信录》",
+        body: '<p style="font-weight:600;text-indent:0;">材料一</p><p>郑伯如晋，子大叔相，见范献子。献子曰：「若王室何？」对曰：「老夫其国家不能恤，敢及王室？抑人亦有言曰：嫠不恤其纬，而忧宗周之陨，为将及焉。今王室实蠢蠢焉，吾小国惧矣，然大国之忧也，吾侪何知焉？吾子其早图之。」</p><p class="note">（节选自《左传·昭公二十四年》）</p><p style="font-weight:600;text-indent:0;">材料二</p><p>漆室女者，鲁漆室邑之女也。当穆公时，君老，太子幼。女倚柱而啸，旁人闻之，莫不为之惨者。其邻人妇从之游，谓曰：「何啸之悲也？」漆室女曰：「吾忧鲁君老，太子幼。」邻妇笑曰：「此乃鲁大夫之忧，妇人何与焉！」漆室女曰：「不然，非子所知也。昔晋客舍吾家，系马园中。马佚驰走，践吾葵，使我终岁不食葵。邻人女奔，随人亡，其家倩吾兄追之。逢霖水出，溺流而死，令吾终身无兄。<b>今鲁君老悖，太子少愚，愚伪日起。夫鲁国有患者君臣父子皆被其辱祸及众庶妇人独安所避乎！</b>吾甚忧之。」</p><p class="note">（节选自刘向《列女传》卷三）</p><p style="font-weight:600;text-indent:0;">材料三</p><p>鲁监门之女婴相从绩，中夜而泣涕。其偶曰：「何谓而泣也？」婴曰：「吾闻卫世子不肖，所以泣也。」其偶曰：「卫世子不肖，诸侯之忧也，子曷为泣也？」婴曰：「吾闻之异乎子之言也。昔者宋之桓司马得罪于宋君，出于鲁，其马佚而辚吾园，而食吾园之葵。是岁，吾闻园人亡利之半。越王勾践起兵而攻吴，诸侯畏其威，鲁往献女，吾姊与焉，兄往视之，道畏而死。越兵威者，吴也；兄死者，我也。今卫世子甚不肖，好兵，吾男弟三人，能无忧乎？」</p><p class="note">（节选自韩婴《韩诗外传》卷二）</p><p style="font-weight:600;text-indent:0;">材料四</p><p>战国之时，说客辩士尤好借物以喻其意，非以为实有此事也，乃汉晋著述者往往误以为实事而采之入书。《春秋传》子大叔云「嫠不恤其纬，而忧宗周之陨，为将及焉」，此不过设言耳。其后衍之，遂谓漆室之女不绩其麻而忧鲁国；其后又衍之，遂谓鲁监门之女婴忧卫世子之不肖。而有「终岁不食葵」「终身无兄」之言，若真有其人其事者矣。由是韩婴竟采之以入《诗外传》，刘向采之以入《列女传》。传之益久，信者愈多，遂至虚言竟成实事。万世之士但见汉人之书有之，遂信之而不疑，抑亦过矣。</p><p class="note">（节选自崔述《考信录》）</p>'
       },
       questions: [
-        {
-          id: "s3q10", type: "single",
-          stem: "材料二画波浪线的部分有三处需要断句，请选出正确的断句组合。<span class='sub-q'>原句：夫鲁国 A 有患者 B 君臣父子 C 皆被其辱 D 祸 E 及众庶 F 妇人 G 独安 H 所避乎！</span>",
+        { id: "s3q10", type: "single", category: "文言文",
+          stem: "材料二画波浪线的部分有三处需要断句，请选出正确的断句组合。",
           options: [
             "夫鲁国有患者 / 君臣父子皆被其辱 / 祸及众庶 / 妇人独安所避乎！",
             "夫鲁国有患者君臣 / 父子皆被其辱祸 / 及众庶妇人 / 独安所避乎！",
@@ -460,72 +296,59 @@ const PAPER = {
             "夫鲁国有患者君臣父子皆被 / 其辱祸及众庶 / 妇人独 / 安所避乎！"
           ],
           answer: 0,
-          analysis: "正确断句为 B、D、F 三处（对应答案选项一）：“夫鲁国有患者，君臣父子皆被其辱，祸及众庶，妇人独安所避乎！”译为：一旦鲁国有祸乱，君臣父子都将遭受屈辱，灾祸蔓延到百姓，一个妇人又能躲到哪里去呢？"
+          analysis: "正确断句：夫鲁国有患者，君臣父子皆被其辱，祸及众庶，妇人独安所避乎！"
         },
-        {
-          id: "s3q11", type: "single",
+        { id: "s3q11", type: "single", category: "文言文",
           stem: "下列对材料中加点的词语及相关内容的解说，不正确的一项是（ ）",
           options: [
-            "如，往、去，与《屈原列传》“使使如秦地”“臣请往如楚”的“如”意义相同。",
-            "与，音 yù，参与，与《离骚》“恐年岁之不吾与”的“与”读音、意义均不相同。",
-            "曷为，“曷”作“为”的前置宾语，与《短歌行》“何以解忧”的“何以”结构相同。",
-            "若，连词，如果，与《烛之武退秦师》“若舍郑以为东道主”的“若”意义相同。"
+            "如，往、去，与《屈原列传》使使如秦地的如意义相同。",
+            "与，音 yù，参与，与《离骚》恐年岁之不吾与的与读音、意义均不相同。",
+            "曷为，曷作为的前置宾语，与《短歌行》何以解忧的何以结构相同。",
+            "若，连词，如果，与《烛之武退秦师》若舍郑以为东道主的若意义相同。"
           ],
           answer: 3,
-          analysis: "D 项错误：材料四中“若真有其人其事者矣”的“若”是“好像、似乎”之意，表揣测；而《烛之武退秦师》“若舍郑以为东道主”的“若”是“如果”，表假设，两者意义不同。A、B、C 解说均正确。"
+          analysis: "D 项错误：材料四中若真有其人其事者矣的若是好像、似乎之意，表揣测；《烛之武退秦师》若舍郑以为东道主的若是如果，表假设。"
         },
-        {
-          id: "s3q12", type: "single",
+        { id: "s3q12", type: "single", category: "文言文",
           stem: "下列对材料有关内容的概述，不正确的一项是（ ）",
           options: [
-            "范献子向子大叔咨询如何对待王室之事，子大叔认为王室动荡，将殃及郑国，郑国很恐惧，但他现在无能为力，希望范献子早作打算。",
+            "范献子向子大叔咨询如何对待王室之事，子大叔认为王室动荡将殃及郑国，希望范献子早作打算。",
             "漆室之女倚柱而啸，邻妇问她为何啸声如此悲惨，漆室女告知原因：晋客的马践踏菜园，我一年吃不上葵菜；兄长溺水而亡，我终身没有了兄长。",
-            "监门之女说：桓司马得罪宋君，出逃到鲁国，导致菜园收成损失一半；越国进攻吴国，而我失去了兄长。同理，如今卫世子不肖，也可能危及我。",
-            "根据材料四，《春秋传》中的“嫠不恤其纬，而忧宗周之陨，为将及焉”是假设之辞，而漆室女、监门女之事都是由此衍生出来的故事。"
+            "监门之女说：桓司马得罪宋君出逃到鲁国，导致菜园收成损失一半；越国进攻吴国，而我失去了兄长。同理，如今卫世子不肖也可能危及我。",
+            "根据材料四，《春秋传》中的嫠不恤其纬是假设之辞，而漆室女、监门女之事都是由此衍生出来的故事。"
           ],
           answer: 1,
-          analysis: "B 项错误：漆室女说的“晋客马践葵”“兄溺而死”是她用来作比的假设事例（昔者……），并不是她自己当下真实遭遇的事；她真正忧的是“鲁君老悖，太子少愚”。选项把比喻当成了真事。A、C、D 概述均符合材料。"
+          analysis: "B 项错误：漆室女说的晋客马践葵、兄溺而死是她用来作比的假设事例（昔者……），并不是她自己当下真实遭遇的事。"
         },
-        {
-          id: "s3q13", type: "subjective",
-          stem: "把材料中画横线的句子翻译成现代汉语。<span class='sub-q'>（1）今鲁君老悖，太子少愚，愚伪日起。<br>（2）鲁监门之女婴相从绩，中夜而泣涕。其偶曰：“何谓而泣也？”</span>",
-          answer: `
-            <p>（1）如今鲁国君主年老昏聩，太子年少无知，奸伪之事一天天兴起。</p>
-            <p>（2）鲁国守门人的女儿名婴，跟随别人一起绩麻，半夜里哭泣流泪。她的同伴问她："为什么哭泣呢？"</p>
-          `,
-          analysis: "关键字：（1）“悖”=昏聩糊涂；“日”=名词作状语，一天天。（2）“监门”=守门人；“相从绩”=跟着一起搓麻线；“中夜”=半夜；“偶”=同伴。"
+        { id: "s3q13", type: "subjective", category: "文言文",
+          stem: "把材料中画横线的句子翻译成现代汉语。<span class='sub-q'>（1）今鲁君老悖，太子少愚，愚伪日起。<br>（2）鲁监门之女婴相从绩，中夜而泣涕。其偶曰：何谓而泣也？</span>",
+          scoringPoints: [
+            "（1）悖=昏聩、日=一天天，译出大意",
+            "（2）监门=守门人、中夜=半夜、偶=同伴，译出大意"
+          ],
+          answer: "<p>（1）如今鲁国君主年老昏聩，太子年少无知，奸伪之事一天天兴起。</p><p>（2）鲁国守门人的女儿名婴，跟随别人一起绩麻，半夜里哭泣流泪。她的同伴问她：为什么哭泣呢？</p>",
+          analysis: "关键字：（1）悖=昏聩糊涂；日=名词作状语。（2）监门=守门人；相从绩=跟着一起搓麻线；中夜=半夜；偶=同伴。"
         },
-        {
-          id: "s3q14", type: "subjective",
+        { id: "s3q14", type: "subjective", category: "文言文",
           stem: "崔述运用三则材料说明了什么观点？请概括他的观点并谈谈你的认识。",
-          answer: `
-            <p><b>观点：</b>对“借物喻意”的故事，刘向、韩婴不应该直接采信，后人不应该信而不疑。</p>
-            <p><b>认识：</b>①对古书中的记载不宜盲目相信，而需加以辨析；②对于“借物喻意”的故事，重在理解故事所阐述的道理，不必强求其真实性。</p>
-          `,
-          analysis: "崔述是清代辨伪大家。他的逻辑是：战国说客本就爱用比喻，本就“非以为实有此事”；后人层层附会，把寓言当史实，越传越真。这则材料本身就是一份“文献学方法论”——读古书要分清寓言与史实，但寓言背后的忧国情怀仍然真实可感。"
+          scoringPoints: [
+            "①观点：不应把寓言当史实盲目相信",
+            "②认识一：古书需辨析，不盲从",
+            "③认识二：寓言重在道理，不必求真"
+          ],
+          answer: "<p><b>观点：</b>对借物喻意的故事，刘向、韩婴不应该直接采信，后人不应该信而不疑。</p><p><b>认识：</b>①对古书中的记载不宜盲目相信，而需加以辨析；②对于借物喻意的故事，重在理解故事所阐述的道理，不必强求其真实性。</p>",
+          analysis: "崔述是清代辨伪大家。他的逻辑是：战国说客本就爱用比喻，本就非以为实有此事；后人层层附会，把寓言当史实。"
         }
       ]
     },
-
     {
-      id: "s4",
-      tab: "阅读IV · 古诗",
+      id: "s4", tab: "古诗", category: "古诗",
       article: {
-        title: "元珍以诗送绿石砚所谓玉堂新样者",
-        author: "王安石",
-        body: `
-          <div class="poem">
-            <p style="text-indent:0;">玉堂新样世争传，况以蛮溪绿石镌。</p>
-            <p style="text-indent:0;">嗟我长来无异物，愧君持赠有佳篇。</p>
-            <p style="text-indent:0;">久埋瘴雾看犹湿，一取春波洗更鲜。</p>
-            <p style="text-indent:0;">还与故人袍色似，论心于此亦同坚。</p>
-          </div>
-          <p class="note">【注】①玉堂：宋代称翰林院为玉堂。②蛮溪：指南方的溪流。③袍色：官袍的颜色，古时低级官员袍服为青绿色。</p>
-        `
+        title: "元珍以诗送绿石砚所谓玉堂新样者", author: "王安石",
+        body: '<div class="poem"><p style="text-indent:0;">玉堂新样世争传，况以蛮溪绿石镌。</p><p style="text-indent:0;">嗟我长来无异物，愧君持赠有佳篇。</p><p style="text-indent:0;">久埋瘴雾看犹湿，一取春波洗更鲜。</p><p style="text-indent:0;">还与故人袍色似，论心于此亦同坚。</p></div><p class="note">【注】①玉堂：宋代称翰林院为玉堂。②蛮溪：指南方的溪流。③袍色：官袍的颜色，古时低级官员袍服为青绿色。</p>'
       },
       questions: [
-        {
-          id: "s4q15", type: "single",
+        { id: "s4q15", type: "single", category: "古诗",
           stem: "下列对这首诗的理解和赏析，不正确的一项是（ ）",
           options: [
             "诗歌开头没有多加铺垫，而是开门见山，直接书写所咏之物。",
@@ -534,155 +357,259 @@ const PAPER = {
             "石砚出自瘴雾之地，看起来水渍斑斑，但洗后就变得鲜亮了。"
           ],
           answer: 3,
-          analysis: "D 项错误：颈联“久埋瘴雾看犹湿，一取春波洗更鲜”是说石砚长期埋在南方瘴雾之地，看去仍带湿润之色；一经春水洗涤，更显得光洁新鲜。这是咏物的雅笔，并非真说石砚“水渍斑斑”需要清洗；且“久埋瘴雾”是形容产地环境，不是写砚台本身脏。A、B、C 均符合诗意。"
+          analysis: "D 项错误：颈联久埋瘴雾看犹湿，一取春波洗更鲜是咏物的雅笔，并非真说石砚水渍斑斑需要清洗；且久埋瘴雾是形容产地环境。"
         },
-        {
-          id: "s4q16", type: "subjective",
+        { id: "s4q16", type: "subjective", category: "古诗",
           stem: "尾联丰富了诗歌的情感内涵，请简要赏析。",
-          answer: `
-            <p>①尾联两句以砚喻人。</p>
-            <p>②由石砚的绿色联想到友人官位低微，暗含惋惜；</p>
-            <p>③继而赞美友人的节操坚贞不移，一如石砚的质地坚硬纯正。</p>
-          `,
-          analysis: "尾联“还与故人袍色似，论心于此亦同坚”是双关：绿石砚的青绿，恰好与故人青绿色的低级官袍同色——颜色相同，本心也一样坚硬。王安石借一方砚，既心疼朋友长期低位，又赞许他不改其志。咏物至此，物、色、人、心四者合一。"
+          scoringPoints: [
+            "①以砚喻人/托物言志的手法",
+            "②由青绿联想到故人官位低微，暗含惋惜",
+            "③赞美节操坚贞，一如石砚质地"
+          ],
+          answer: "<p>①尾联两句以砚喻人。</p><p>②由石砚的绿色联想到友人官位低微，暗含惋惜；</p><p>③继而赞美友人的节操坚贞不移，一如石砚的质地坚硬纯正。</p>",
+          analysis: "尾联还与故人袍色似，论心于此亦同坚是双关：绿石砚的青绿，恰好与故人青绿色的低级官袍同色——颜色相同，本心也一样坚硬。"
         }
       ]
     }
   ]
 };
 
-/* ===================== 状态管理 ===================== */
-const STORE_KEY = "yw_read_2025_g1_v1";
-let state = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
-// state: { [qid]: { chosen: number|null, revealed: bool } }
-let currentSection = 0;
+const USERS_KEY = "xyuedu_users";
+const CURRENT_KEY = "xyuedu_current";
+function getUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || "[]"); }
+function setUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+function getCurrentUser() { return localStorage.getItem(CURRENT_KEY); }
+function setCurrentUser(u) { localStorage.setItem(CURRENT_KEY, u); }
+function dataKey(u) { return "xyuedu_data_" + u; }
+function loadData(u) { return JSON.parse(localStorage.getItem(dataKey(u)) || '{"answers":{},"wrong":[]}'); }
+function saveData(u, d) { localStorage.setItem(dataKey(u), JSON.stringify(d)); }
 
-function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+function renderExistingUsers() {
+  const users = getUsers();
+  const el = document.getElementById("existingUsers");
+  if (!users.length) { el.innerHTML = ""; return; }
+  el.innerHTML = "或选择已有用户：<br>" + users.map(function(u){ return "<button onclick='quickLogin(\"" + u + "\")'>" + u + "</button>"; }).join("");
+}
+function login() {
+  const name = document.getElementById("usernameInput").value.trim();
+  if (!name) { alert("请输入名字"); return; }
+  const users = getUsers();
+  if (users.indexOf(name) < 0) { users.push(name); setUsers(users); }
+  setCurrentUser(name);
+  enterMain();
+}
+function quickLogin(name) { setCurrentUser(name); enterMain(); }
+function logout() { if (confirm("切换用户？")) { localStorage.removeItem(CURRENT_KEY); location.reload(); } }
+function deleteAccount() {
+  const u = getCurrentUser();
+  if (!confirm("确定删除账号「" + u + "」？所有答题记录和错题本将被清空。")) return;
+  let users = getUsers().filter(function(x){ return x !== u; });
+  setUsers(users);
+  localStorage.removeItem(dataKey(u));
+  localStorage.removeItem(CURRENT_KEY);
+  location.reload();
+}
 
-/* ===================== 渲染 ===================== */
-const tabsEl = document.getElementById("tabs");
-const articleEl = document.getElementById("article");
-const quizEl = document.getElementById("quiz");
+let currentUser = null;
+let data = null;
+let currentChap = 0;
+let currentTab = "quiz";
 
-function renderTabs() {
-  tabsEl.innerHTML = "";
-  PAPER.sections.forEach((s, i) => {
+function enterMain() {
+  currentUser = getCurrentUser();
+  data = loadData(currentUser);
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("mainScreen").style.display = "block";
+  document.getElementById("currentUserLabel").textContent = currentUser;
+  renderAll();
+}
+
+function allQuestions() {
+  const arr = [];
+  PAPER.sections.forEach(function(s){ s.questions.forEach(function(q){ arr.push(q); }); });
+  return arr;
+}
+function findQ(qid) { return allQuestions().find(function(q){ return q.id === qid; }); }
+
+function renderChapTabs() {
+  const el = document.getElementById("chapTabs");
+  el.innerHTML = "";
+  PAPER.sections.forEach(function(s, i){
     const b = document.createElement("button");
     b.textContent = s.tab;
-    if (i === currentSection) b.classList.add("active");
-    b.onclick = () => { currentSection = i; render(); };
-    tabsEl.appendChild(b);
+    if (i === currentChap) b.classList.add("active");
+    b.onclick = function(){ currentChap = i; renderAll(); };
+    el.appendChild(b);
   });
 }
 
 function renderArticle() {
-  const s = PAPER.sections[currentSection];
-  articleEl.innerHTML = `
-    <h2>${s.article.title}</h2>
-    <div class="author">${s.article.author}</div>
-    <div class="body">${s.article.body}</div>
-  `;
+  const s = PAPER.sections[currentChap];
+  document.getElementById("article").innerHTML = "<h2>" + s.article.title + "</h2><div class='author'>" + s.article.author + "</div><div class='body'>" + s.article.body + "</div>";
 }
 
 function renderQuiz() {
-  const s = PAPER.sections[currentSection];
-  quizEl.innerHTML = "";
-  s.questions.forEach((q) => {
+  const s = PAPER.sections[currentChap];
+  const el = document.getElementById("qList");
+  el.innerHTML = "";
+  s.questions.forEach(function(q){
+    const st = data.answers[q.id] || { chosen: null, revealed: false, sp: [] };
     const card = document.createElement("div");
     card.className = "q-card";
-    const st = state[q.id] || { chosen: null, revealed: false };
-
     if (q.type === "single") {
-      const optsHtml = q.options.map((opt, i) => {
+      const optsHtml = q.options.map(function(opt, i){
         let cls = "opt";
         if (st.chosen !== null) {
           cls += " disabled";
           if (i === q.answer) cls += " correct";
           else if (i === st.chosen) cls += " wrong";
         }
-        return `<button class="${cls}" data-q="${q.id}" data-i="${i}">
-          <span class="label">${"ABCD"[i]}.</span><span>${opt}</span>
-        </button>`;
+        return '<button class="' + cls + '" data-q="' + q.id + '" data-i="' + i + '"><span class="label">' + "ABCD"[i] + ".</span><span>" + opt + "</span></button>";
       }).join("");
-      card.innerHTML = `
-        <div class="q-head"><span class="q-num">${q.id.toUpperCase()}</span><span class="q-tag">单选题</span></div>
-        <p class="q-stem">${q.stem}</p>
-        <div class="options">${optsHtml}</div>
-        <div class="answer-block ${st.chosen !== null ? "show" : ""}">
-          <div class="lbl">答案与解析</div>
-          <p><b>答案：${"ABCD"[q.answer]}</b></p>
-          <p>${q.analysis}</p>
-        </div>
-      `;
+      card.innerHTML = '<div class="q-head"><span class="q-num">' + q.id.toUpperCase() + '</span><span class="q-cat">' + q.category + ' · 单选题</span></div><p class="q-stem">' + q.stem + '</p><div class="options">' + optsHtml + '</div><div class="answer-block ' + (st.chosen !== null ? "show" : "") + '"><div class="lbl">答案与解析</div><p><b>答案：' + "ABCD"[q.answer] + '</b></p><p>' + q.analysis + '</p></div>';
     } else {
-      card.innerHTML = `
-        <div class="q-head"><span class="q-num">${q.id.toUpperCase()}</span><span class="q-tag">主观题 · 先自己想，再看参考答案</span></div>
-        <p class="q-stem">${q.stem}</p>
-        <div class="subjective-box">✍️ 在心里或纸上作答，写完后点下面按钮对照参考答案。</div>
-        <button class="reveal-btn" data-q="${q.id}">${st.revealed ? "收起参考答案" : "显示参考答案"}</button>
-        <div class="answer-block ${st.revealed ? "show" : ""}">
-          <div class="lbl">参考答案 / 解析</div>
-          ${q.answer}
-          <p style="margin-top:8px;color:var(--ink-2);font-size:13px;">💡 ${q.analysis || ""}</p>
-        </div>
-      `;
+      const spHtml = q.scoringPoints.map(function(sp, i){
+        return '<div class="sp-item ' + (st.sp.indexOf(i) >= 0 ? "checked" : "") + '" data-sp="' + q.id + '" data-i="' + i + '"><div class="checkbox">' + (st.sp.indexOf(i) >= 0 ? "✓" : "") + '</div><span>' + sp + '</span></div>';
+      }).join("");
+      const hitCount = st.sp.length;
+      const totalCount = q.scoringPoints.length;
+      card.innerHTML = '<div class="q-head"><span class="q-num">' + q.id.toUpperCase() + '</span><span class="q-cat">' + q.category + ' · 主观题</span></div><p class="q-stem">' + q.stem + '</p><div style="border:1px dashed var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink-2);margin-bottom:10px;">✍️ 先自己作答，写完后对照参考答案勾选你踩中的采分点。</div><button class="reveal-btn" data-reveal="' + q.id + '">' + (st.revealed ? "收起参考答案" : "显示参考答案") + '</button><div class="answer-block ' + (st.revealed ? "show" : "") + '"><div class="lbl">参考答案 / 解析</div>' + q.answer + '<p style="margin-top:8px;color:var(--ink-2);font-size:13px;">💡 ' + q.analysis + '</p></div>' + (st.revealed ? '<div class="sp-box"><div class="sp-title">👇 你踩中了哪些采分点？</div>' + spHtml + '<div class="sp-score">已勾选 ' + hitCount + ' / ' + totalCount + '</div></div>' : "");
     }
-    quizEl.appendChild(card);
+    el.appendChild(card);
   });
-
-  // 绑定选项
-  quizEl.querySelectorAll(".opt").forEach(btn => {
-    btn.onclick = () => {
+  el.querySelectorAll(".opt").forEach(function(btn){
+    btn.onclick = function(){
       const qid = btn.dataset.q, i = parseInt(btn.dataset.i);
-      state[qid] = state[qid] || { chosen: null, revealed: false };
-      if (state[qid].chosen !== null) return;
-      state[qid].chosen = i;
-      save(); renderQuiz(); updateProgress();
+      const st = data.answers[qid] = data.answers[qid] || { chosen: null, revealed: false, sp: [] };
+      if (st.chosen !== null) return;
+      st.chosen = i;
+      const q = findQ(qid);
+      if (i === q.answer) removeWrong(qid); else addWrong(qid);
+      saveData(currentUser, data);
+      renderAll();
     };
   });
-  // 绑定主观题 reveal
-  quizEl.querySelectorAll(".reveal-btn").forEach(btn => {
-    btn.onclick = () => {
-      const qid = btn.dataset.q;
-      state[qid] = state[qid] || { chosen: null, revealed: false };
-      state[qid].revealed = !state[qid].revealed;
-      save(); renderQuiz();
+  el.querySelectorAll("[data-reveal]").forEach(function(btn){
+    btn.onclick = function(){
+      const qid = btn.dataset.reveal;
+      const st = data.answers[qid] = data.answers[qid] || { chosen: null, revealed: false, sp: [] };
+      st.revealed = !st.revealed;
+      saveData(currentUser, data);
+      renderAll();
     };
   });
+  el.querySelectorAll(".sp-item").forEach(function(item){
+    item.onclick = function(){
+      const qid = item.dataset.sp, i = parseInt(item.dataset.i);
+      const st = data.answers[qid];
+      const idx = st.sp.indexOf(i);
+      if (idx >= 0) st.sp.splice(idx, 1); else st.sp.push(i);
+      const q = findQ(qid);
+      if (st.sp.length < q.scoringPoints.length) addWrong(qid); else removeWrong(qid);
+      saveData(currentUser, data);
+      renderAll();
+    };
+  });
+}
+
+const SRS_INTERVALS = [1, 3, 7, 15];
+function addWrong(qid) {
+  if (data.wrong.find(function(w){ return w.qid === qid; })) return;
+  data.wrong.push({ qid: qid, nextReview: Date.now() + SRS_INTERVALS[0]*86400000, streak: 0, times: 0 });
+}
+function removeWrong(qid) { data.wrong = data.wrong.filter(function(w){ return w.qid !== qid; }); }
+function getDueWrong() { const now = Date.now(); return data.wrong.filter(function(w){ return w.nextReview <= now; }); }
+
+function renderWrong() {
+  const el = document.getElementById("tab-wrong");
+  const due = getDueWrong();
+  const total = data.wrong.length;
+  let html = "";
+  if (due.length > 0) {
+    html += '<div class="review-banner"><div class="info">今日有 <b>' + due.length + '</b> 道题需要复习</div><button onclick="startReview()">开始复习</button></div>';
+  }
+  if (total === 0) {
+    html = '<div class="empty-state"><div class="icon">🎉</div><p>太棒了，暂无错题</p></div>';
+  } else {
+    html += '<h3 style="font-size:14px;color:var(--ink-3);margin:16px 0 10px;">全部错题（' + total + '）</h3>';
+    data.wrong.forEach(function(w){
+      const q = findQ(w.qid);
+      const dueStr = w.nextReview <= Date.now() ? "今日复习" : new Date(w.nextReview).toLocaleDateString("zh-CN");
+      const stemText = q.stem.replace(/<[^>]+>/g, "").slice(0, 80);
+      html += '<div class="wrong-item"><div class="wi-head"><span>' + q.category + ' · ' + (q.type === "single" ? "单选" : "主观") + '</span><span>' + dueStr + '</span></div><div class="wi-stem">' + stemText + '...</div></div>';
+    });
+  }
+  el.innerHTML = html;
+}
+
+function startReview() {
+  const due = getDueWrong();
+  if (due.length === 0) return;
+  const firstQ = findQ(due[0].qid);
+  const secIdx = PAPER.sections.findIndex(function(s){ return s.questions.some(function(q){ return q.id === firstQ.id; }); });
+  currentChap = secIdx;
+  switchTab("quiz");
+  alert("复习提醒：请在下方完成错题。做对后自动记录，连续两次做对将移出错题本。");
+}
+
+function renderDash() {
+  const el = document.getElementById("tab-dash");
+  const cats = ["信息类", "文学类", "文言文", "古诗"];
+  const stats = {};
+  cats.forEach(function(c){ stats[c] = { total: 0, correct: 0, attempted: 0 }; });
+  allQuestions().forEach(function(q){
+    stats[q.category].total++;
+    const st = data.answers[q.id];
+    if (!st) return;
+    stats[q.category].attempted++;
+    if (q.type === "single" && st.chosen !== null) {
+      if (st.chosen === q.answer) stats[q.category].correct++;
+    } else if (q.type === "subjective" && st.revealed) {
+      const hit = st.sp.length;
+      const total = q.scoringPoints.length;
+      if (total > 0) stats[q.category].correct += hit / total;
+    }
+  });
+  const totalQ = allQuestions().length;
+  const attemptedQ = Object.keys(data.answers).length;
+  const wrongCount = data.wrong.length;
+  let barsHtml = "";
+  cats.forEach(function(c){
+    const s = stats[c];
+    const pct = s.attempted > 0 ? Math.round(s.correct / s.attempted * 100) : 0;
+    const color = pct >= 80 ? "var(--ok)" : pct >= 60 ? "var(--warn)" : "var(--err)";
+    barsHtml += '<div class="bar-row"><div class="bar-label">' + c + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.max(pct,5) + '%;background:' + color + ';">' + pct + '%</div></div></div>';
+  });
+  el.innerHTML = '<div class="dash-card"><h3>总览</h3><div class="stat-grid"><div class="stat-cell"><div class="num">' + attemptedQ + '</div><div class="lbl">已做题数</div></div><div class="stat-cell"><div class="num">' + wrongCount + '</div><div class="lbl">待复习错题</div></div><div class="stat-cell"><div class="num">' + Math.round(attemptedQ/totalQ*100) + '%</div><div class="lbl">完成度</div></div></div></div><div class="dash-card"><h3>各类别正确率</h3>' + barsHtml + '<p style="font-size:12px;color:var(--ink-3);margin-top:12px;">💡 绿色 ≥80%，黄色 60-80%，红色 &lt;60%。主观题按采分点命中率折算。</p></div>';
 }
 
 function updateProgress() {
-  let total = 0, done = 0;
-  PAPER.sections.forEach(s => s.questions.forEach(q => {
-    total++;
-    const st = state[q.id];
+  const total = allQuestions().length;
+  let done = 0;
+  allQuestions().forEach(function(q){
+    const st = data.answers[q.id];
     if (!st) return;
     if (q.type === "single" && st.chosen !== null) done++;
     if (q.type === "subjective" && st.revealed) done++;
-  }));
+  });
   document.getElementById("bar").style.width = (done/total*100) + "%";
-  document.getElementById("progressText").textContent = `已答 ${done} / ${total}`;
+  document.getElementById("progressText").textContent = currentUser + " · 已答 " + done + " / " + total + " · 错题 " + data.wrong.length;
 }
 
-function render() {
-  renderTabs(); renderArticle(); renderQuiz(); updateProgress();
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll("nav.bottom-tabs button").forEach(function(b){ b.classList.toggle("active", b.dataset.tab === tab); });
+  document.getElementById("tab-quiz").classList.toggle("hidden", tab !== "quiz");
+  document.getElementById("tab-wrong").classList.toggle("hidden", tab !== "wrong");
+  document.getElementById("tab-dash").classList.toggle("hidden", tab !== "dash");
+  renderAll();
   window.scrollTo({ top: 0 });
 }
 
-/* 上下章 */
-document.getElementById("prevBtn").onclick = () => {
-  if (currentSection > 0) { currentSection--; render(); }
-};
-document.getElementById("nextBtn").onclick = () => {
-  if (currentSection < PAPER.sections.length - 1) { currentSection++; render(); }
-};
-document.getElementById("resetBtn").onclick = () => {
-  if (confirm("确定要清空所有答题记录，重做一遍吗？")) {
-    state = {}; save(); render();
-  }
-};
+function renderAll() { renderChapTabs(); renderArticle(); renderQuiz(); renderWrong(); renderDash(); updateProgress(); }
 
-render();
+renderExistingUsers();
+if (getCurrentUser()) { enterMain(); }
 </script>
 </body>
 </html>
